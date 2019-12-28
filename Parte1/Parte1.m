@@ -5,7 +5,7 @@
 clear all
 clc
 
-addpath('Funciones');
+addpath('../Funciones');
 
 %% LECTURA DE PLANTILLAS
 %
@@ -16,7 +16,7 @@ var = eval('Objeto01Angulo01');
 
 %% LECTURA DE IMÁGENES DE TRAINING E HISTOGRAMAS
 %
-I = imread('../Imagenes/01_Training/Training_01.jpg');
+I = imread('../Imagenes/01_Training/Training_04.jpg');
 numero_Objetos = 7;
 % imshow(I);
 
@@ -42,24 +42,17 @@ bb(1,:) = [];
 
 bb = round(bb)
 
-imagenes = {}
+caracteres = {}
 
 for i=1:size(bb,1)
 
     Ie = Ietiq(bb(i,2):bb(i,2)+bb(i,4), bb(i,1):bb(i,1) + bb(i,3));
 
-    imagenes{i} = Ie > 0;
+    caracteres{i} = Ie > 0;
     
 end
 
-imshow(imagenes{1})
-imshow(imagenes{2})
-imshow(imagenes{3})
-imshow(imagenes{4})
-imshow(imagenes{5})
-imshow(imagenes{6})
-imshow(imagenes{7})
-
+save('./Variables_Generadas/caracteres.mat', 'caracteres');
 
 %% OTROS MÉTODOS DE SEGMENTACIÓN
 %
