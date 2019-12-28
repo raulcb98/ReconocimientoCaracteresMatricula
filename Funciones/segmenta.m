@@ -1,4 +1,4 @@
-function [Ietiq] = segmenta(R, numero_Objetos)
+function [caracteres, centroides] = segmenta(R, numero_Objetos)
 
     % Umbralización Global
     T = graythresh(R) * 255;
@@ -8,9 +8,20 @@ function [Ietiq] = segmenta(R, numero_Objetos)
     W = 12;
     Ib = imfilter(Ib, ones(W,W)/(W*W));
 
+    % Filtrado de línea central
+    Ietiq = bwlabel(Ib);
+    
+    filaCentral = round(size(R,1)/2);
+    etiquetasValidas = unique(Ietiq(filaCentral,:));
+    etiquetasValidas(etiquetasValidas == 0) = [];
+    
+    Ib = false(size(Ietiq));
+    for i=1:length(etiquetasValidas)
+        Ib = Ib | Ietiq == etiquetasValidas(i);
+    end
+    
     % Filtrado de mayores agrupaciones
     Ietiq = bwlabel(Ib);
-
     stats = regionprops(Ietiq,'Area');
     areas = cat(1,stats.Area);
 
@@ -26,6 +37,23 @@ function [Ietiq] = segmenta(R, numero_Objetos)
     % Eliminamos parte izquierda de la matricula
     Ietiq = bwlabel(Ib);
     Ietiq(Ietiq == 1) = 0;
+    
+    % Recortamos el bounding box
+    stats = regionprops(Ietiq,'BoundingBox');
+    bb = cat(1,stats.BoundingBox);
+
+    bb(1,:) = [];
+    bb = round(bb);
+
+    caracteres = {};
+    centroides = zeros(size(bb,1),2);
+    for i=1:size(bb,1)
+        Ie = Ietiq(bb(i,2):bb(i,2)+bb(i,4), bb(i,1):bb(i,1) + bb(i,3));
+        caracteres{i} = Ie > 0;
+        
+        centroides(i,1) = bb(i,1) + round(bb(i,3)/2);
+        centroides(i,2) = bb(i,2) + round(bb(i,4)/2);
+    end
 
 end
 

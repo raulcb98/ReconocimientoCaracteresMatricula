@@ -32,26 +32,7 @@ subplot(2,1,2);
 
 %% SEGMENTACIÓN DE IMÁGENES
 %
-Ietiq = segmenta(R,numero_Objetos);
-imtool(Ietiq)
-
-stats = regionprops(Ietiq,'BoundingBox');
-bb = cat(1,stats.BoundingBox)
-
-bb(1,:) = [];
-
-bb = round(bb)
-
-caracteres = {}
-
-for i=1:size(bb,1)
-
-    Ie = Ietiq(bb(i,2):bb(i,2)+bb(i,4), bb(i,1):bb(i,1) + bb(i,3));
-
-    caracteres{i} = Ie > 0;
-    
-end
-
+caracteres = segmenta(R,numero_Objetos);
 save('./Variables_Generadas/caracteres.mat', 'caracteres');
 
 %% OTROS MÉTODOS DE SEGMENTACIÓN
