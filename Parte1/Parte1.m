@@ -12,8 +12,6 @@ addpath('../Funciones');
 
 load('../Imagenes/00_Plantillas/Plantillas.mat')
 
-var = eval('Objeto01Angulo01');
-
 %% LECTURA DE IMÁGENES DE TRAINING E HISTOGRAMAS
 %
 I = imread('../Imagenes/01_Training/Training_04.jpg');

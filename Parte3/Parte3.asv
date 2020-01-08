@@ -14,7 +14,7 @@ addpath('../Funciones');
 
 % Apartado 1.1
 
-Io = imread('../Imagenes/03_Imagenes_completas/17.JPG');
+Io = imread('../Imagenes/03_Imagenes_completas/08.JPG');
 % imshow(Io);
 
 % Apartado 1.2
@@ -202,13 +202,14 @@ umbral = 0.25 * vector_PSuavOrd(3);
 
 % Apartado 3.6
 B = Io(:,:,3);
-B = imresize(double(B), [newRows, newColumns]);
 Bred = B(fila_min_placa:fila_max_placa,:);
 
 numColumnas = size(Bred,2);
 mediasBred = mean(Bred);
 mediasBredOrd = sort(mediasBred,'Ascend');
 percentil20 = mediasBredOrd(1,round(0.2 * numColumnas)); % hemos considerado 0.1 para presentacion
+
+percentil20 = percentil20/255;
 
 indexValuesColumns = mediasBred(indexColumns);
 [~,indexIndexColumns] = find(indexValuesColumns > percentil20);
@@ -238,10 +239,8 @@ IoRed = Io(fila_min_placa_o:fila_max_placa_o, columna_min_placa_o:columna_max_pl
 % Apartado 4.2
 [~,numColumnsRed,~] = size(IoRed);
 
-factor = 50;
-
-indexColumnIni = round(numColumnsRed/factor)+1;
-indexColumnFin = numColumnsRed-round(numColumnsRed/factor);
+indexColumnIni = round(numColumnsRed/50)+1;
+indexColumnFin = numColumnsRed-round(numColumnsRed/50);
 
 % Apartado 4.3
 ImagenColorReducida = IoRed(:, indexColumnIni:indexColumnFin,:);
