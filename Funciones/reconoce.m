@@ -5,6 +5,7 @@ function [output] = reconoce(caracteres)
     caracteresPosibles = '0123456789ABCDFGHKLNRSTXYZ';
     angulosPosibles = -9:3:9;
 
+    % Calcula el pattern matching
     matrixCorr = zeros(length(caracteres), length(caracteresPosibles));
     for i = 1:length(caracteres)
         for numCaracter=1:length(caracteresPosibles)
@@ -24,6 +25,7 @@ function [output] = reconoce(caracteres)
         end
     end
 
+    % Extrae la mejor coincidencia
     output = [];
     for i = 1:length(caracteres)
         [~,indexCaracter] = find(matrixCorr(i,:) == max(matrixCorr(i,:),[],2));

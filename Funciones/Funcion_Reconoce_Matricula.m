@@ -1,6 +1,7 @@
 function Funcion_Reconoce_Matricula(nombre, numero_Objetos)
 
     I = imread(nombre);
+    I = recorta(I);
     R = I(:,:,1);
     
     [caracteres, centroides] = segmenta(R,numero_Objetos);

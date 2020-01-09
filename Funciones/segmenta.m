@@ -1,12 +1,10 @@
 function [caracteres, centroides] = segmenta(R, numero_Objetos)
 
-    % Umbralización Global
-    T = graythresh(R) * 255;
-    Ib = R < T;
-
-    % Filtro de medias
-    W = 12;
-    Ib = imfilter(Ib, ones(W,W)/(W*W));
+    % Umbralización local
+    W = 70;
+    umbralesLocales = imfilter(R, ones(W,W)/(W*W));
+    umbralesLocales = umbralesLocales - 4;
+    Ib = R < umbralesLocales;
 
     % Filtrado de línea central
     Ietiq = bwlabel(Ib);
@@ -34,10 +32,14 @@ function [caracteres, centroides] = segmenta(R, numero_Objetos)
         Ib = Ib | Ietiq == etiquetasMayores(i);
     end
     
+    % Cierre morfológico
+    W = 4;
+    Ib = imclose(Ib, ones(W,W));
+    
     % Eliminamos parte izquierda de la matricula
     Ietiq = bwlabel(Ib);
     Ietiq(Ietiq == 1) = 0;
-    
+   
     % Recortamos el bounding box
     stats = regionprops(Ietiq,'BoundingBox');
     bb = cat(1,stats.BoundingBox);
