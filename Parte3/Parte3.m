@@ -14,7 +14,7 @@ addpath('../Funciones');
 
 % Apartado 1.1
 
-Io = imread('../Imagenes/03_Imagenes_completas/17.JPG');
+Io = imread('../Imagenes/03_Imagenes_completas/03.JPG');
 % imshow(Io);
 
 % Apartado 1.2

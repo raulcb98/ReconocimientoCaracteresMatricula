@@ -5,7 +5,7 @@ function Funcion_Reconoce_Matricula(nombre, numero_Objetos)
     R = I(:,:,1);
     
     [caracteres, centroides] = segmenta(R,numero_Objetos);
-    matricula = reconoce(caracteres);
+    [matricula, matrixCorr] = reconoce(caracteres);
     
     figure;
     imshow(I); hold on;
@@ -18,5 +18,8 @@ function Funcion_Reconoce_Matricula(nombre, numero_Objetos)
     end
     
     title(matricula);
+    
+    analizaResultados(matrixCorr, matricula);
+    
 end
 

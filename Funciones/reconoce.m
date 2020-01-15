@@ -1,4 +1,4 @@
-function [output] = reconoce(caracteres)
+function [output, matrixCorr] = reconoce(caracteres)
 
     load('../Imagenes/00_Plantillas/Plantillas.mat')
 
